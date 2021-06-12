@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie } from 'nookies';
+import { signOut } from '../contexts/AuthContext';
 
 interface ResponseRefreshToken {
   token: string;
@@ -78,6 +79,9 @@ api.interceptors.response.use(response => {
       
     } else {
       // deslogar usuário
+      signOut();
     }
   }
-})
+
+  return Promise.reject(error);
+});
